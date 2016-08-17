@@ -1,0 +1,73 @@
+<h2>{{pageTitle}}</h2>
+<div class="loading" *ngIf="showSpinner">Loading&#8230;</div>
+<form #storeReportForm="ngForm"> <!-- #storeReportForm="ngForm" -->
+    <div class="row">
+        <div class="col-md-3">
+            <label for="chain">Chain</label>
+            <select class="form-control" [(ngModel)]="chain" name="chain" (ngModelChange)="chainSelect($event)" required>
+                <option *ngFor="let chain of chains" [value]="chain.Number">{{chain.Name}}</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="storeNumber">Store Number</label>
+            <select [disabled]="stores.length <= 0" class="form-control" [(ngModel)]="store" name="store" required>
+                <option *ngFor="let store of stores" [value]="store.StoreNumber">{{store.StoreNumber}}</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="maxRadius">Max Radius</label>
+            <input type="number" [(ngModel)]="maxRadius" class="form-control" name="maxRadius" placeholder="Max Radius" required>
+        </div>
+        <div class="col-md-2">
+            <label for="maxResults">Max Results</label>
+            <input type="number" [(ngModel)]="maxResults" class="form-control" name="maxResults" placeholder="Max Results" required>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-block btn-default" style="margin-top:25px" [disabled]="!storeReportForm.form.valid" (click)="loadReport()">Search</button>
+        </div>
+    </div>
+    <br />
+
+    <!-- filter -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                    <input type="text" class="form-control" placeholder="Filter Store Report" #term name="search" (keyup)="search(term.value)" [disabled]="items.length <= 0">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr class="row bg-primary">
+                        <th>Primary Name</th>
+                        <th>Secondary Name</th>
+                        <th>Account Info</th>
+                        <th>State</th>
+                </thead>
+                <tbody>
+                    <!--TODO: need order by pipe -->
+                    <tr class="row" *ngFor="let item of filtered | slice:(currentPage-1)*listSize:((currentPage-1)*listSize)+listSize">
+                        <td>{{item.primary_Name}}</td>
+                        <td>{{item.secondary_Name}}</td>
+                        <td>{{item.account_Information}}</td>
+                        <td>{{item.state}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <pagination [totalItems]="totalItems" [boundaryLinks]="true" [itemsPerPage]="listSize" [maxSize]="5" name='foo' [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+        </div>
+    </div>
+</form>
+    
+
+    
+    

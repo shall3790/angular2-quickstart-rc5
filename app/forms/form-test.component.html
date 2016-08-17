@@ -1,0 +1,7 @@
+<h2>Form test</h2>
+
+<form #f="ngForm">
+  <input name="first" [(ngModel)]="first">
+  <input name="last" [(ngModel)]="last">
+</form>
+{{last | uppercase }},{{first | uppercase}} 

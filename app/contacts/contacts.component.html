@@ -1,0 +1,22 @@
+<button class="btn btn-primary" (click)='loadStates()'>Load States</button>
+
+<div class="row">
+    <div class="col-md-8">
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr class="row bg-primary">
+                    <th>Name</th>
+                    <th>Abbreviation</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="row" *ngFor="let item of states | slice:(currentPage-1)*listSize:((currentPage-1)*listSize)+listSize">
+                    <td>{{item.Name}}</td>
+                    <td>{{item.Abbreviation}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<pagination [totalItems]="totalItems" [boundaryLinks]="true" [itemsPerPage]="listSize" [maxSize]="5" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
-
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
 
@@ -14,7 +15,18 @@
 
     <script src="systemjs.config.js"></script>
     <script>
-      System.import('app').catch(function(err){ console.error(err); });
+      // System.import('app').catch(function(err){ console.error(err); });
+        System.import('app/main').then(function (m) {
+            var apiEndpoint = 'http://localhost/api';
+            var title = 'Test App';
+
+            // main.js startup method
+            m.RunApplication(apiEndpoint, title);
+
+        }, console.error.bind(console))
+            .catch(function (err) {
+                console.error(err);
+        });
     </script>
   </head>
 
